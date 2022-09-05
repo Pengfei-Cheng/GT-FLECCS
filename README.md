@@ -12,11 +12,9 @@ For the full model description, please contact [Pengfei Cheng](pengfeicheng@gate
 
 ## Branches
 
-There are currently three 3 branches:
+There are currently 2 branches:
 - `main`: the most up-to-date one with all the features 
-- `B31A`: contains the optimization model for the operations of B31A (unretrofitted NGCC)
-- `surrogate`: contains an optimization model based on an old version of `main`
-to generate solutions as machine learning model input. Currently NOT maintained.
+- `base-NGCC`: contains the optimization model for the operations of B31A (unretrofitted NGCC)
 
 ## `main` Branch Layout
 
@@ -30,9 +28,7 @@ to generate solutions as machine learning model input. Currently NOT maintained.
 │       ├── params
 │       ├── model.jl                    # main file
 │       ├── obj.jl
-│       ├── princeton-genx-fleccs6.jl   # model description for Princeton GenX framework
 │       └── variables.jl
-│   ├── NPV_IRR                         # scripts for calculating NPVs with fixed IRR
 │   ├── post_processing                 # post-processing scripts
 │   ├── regression                      # regression scripts for data from simulation
 │   └── resources                       # other resource files

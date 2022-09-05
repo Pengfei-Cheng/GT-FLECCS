@@ -135,12 +135,6 @@ for (CO2_credit, scenario_name) in scenarios
     df_power_price = dropmissing(df_power_price)
     global power_price =(df_power_price[!, SCENARIO_NAME])
 
-    # total hours
-    global n_hour = 24 * 364
-    # set of hours
-    global set_hour_0 = 0:n_hour  # start from 0
-    global set_hour = 1:n_hour  # start from 1
-
     # start-up cost, $
     # CO2 emission during start-up: 100.45 tonne
     # fuel consumption during start-up: 16958.58 MMBtu

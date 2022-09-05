@@ -27,16 +27,16 @@ function gen_operation_cost_df(m)
     for i in set_hour
         fuel_cost = cost_NG * value(x_fuel[i])
         CO2_credit = CO2_CREDIT * value(x_CO2_cap_total[i])
-        a_cost_CO2_TS_t = a_cost_CO2_TS * value(x_CO2_compress[i])
-        power_profit = power_price[i + 1] * value(x_power_net[i])
-        x_cost_NGCC_VOM_t = value(x_cost_NGCC_VOM[i])
-        x_cost_PCC_VOM_t = value(x_cost_PCC_VOM[i])
-        x_cost_DAC_VOM_t = value(x_cost_DAC_VOM[i])
-        x_cost_PCC_compr_VOM_t = value(x_cost_PCC_compr_VOM[i])
-        x_cost_DAC_compr_VOM_t = value(x_cost_DAC_compr_VOM[i])
-        push!(df_cost, (fuel_cost, CO2_credit, a_cost_CO2_TS_t,
-                        power_profit, x_cost_NGCC_VOM_t, x_cost_PCC_VOM_t, x_cost_DAC_VOM_t,
-                        x_cost_PCC_compr_VOM_t, x_cost_DAC_compr_VOM_t))
+        cost_CO2_TS_t = a_cost_CO2_TS * value(x_CO2_compress[i])
+        power_profit = power_price[i] * value(x_power_net[i])
+        cost_NGCC_VOM_t = value(x_cost_NGCC_VOM[i])
+        cost_PCC_VOM_t = value(x_cost_PCC_VOM[i])
+        cost_DAC_VOM_t = value(x_cost_DAC_VOM[i])
+        cost_PCC_compr_VOM_t = value(x_cost_PCC_compr_VOM[i])
+        cost_DAC_compr_VOM_t = value(x_cost_DAC_compr_VOM[i])
+        push!(df_cost, (fuel_cost, CO2_credit, cost_CO2_TS_t,
+                        power_profit, cost_NGCC_VOM_t, cost_PCC_VOM_t, cost_DAC_VOM_t,
+                        cost_PCC_compr_VOM_t, cost_DAC_compr_VOM_t))
     end
 
     return df_cost

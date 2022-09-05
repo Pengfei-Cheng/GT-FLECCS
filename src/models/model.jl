@@ -15,7 +15,7 @@ println("*" ^ 80 * "\n")
 # solving time limit
 TIME_LIMIT = 3600
 # solving optimality gap
-GAP = 0.1
+GAP = 0.01
 
 # natural gas price, $/MMBtu
 global cost_NG = 3.83
@@ -109,7 +109,7 @@ scenarios_2 = vec(collect(Iterators.product(CO2_credits, scenario_names)))
 full_scenarios = vcat(scenarios_1, scenarios_2)
 
 # single scenario array for test
-test_scenarios = [(100, "MiNg_100_NYISO")]
+test_scenarios = [(300, "MiNg_150_NYISO")]
 
 if SCENARIOS == "ALL"
     scenarios = full_scenarios

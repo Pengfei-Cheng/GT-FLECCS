@@ -45,7 +45,13 @@ function write_results(m::JuMP.Model, output_prefix::String="", output_suffix::S
     if output_suffix != ""
         rel_path = rel_path * "-" * output_suffix
     end
-    rel_path = "results/revamp-start-up/" * rel_path
+
+    # create results folder if it doesn't exist
+    if !isdir("results")
+        mkdir("results")
+    end
+
+    rel_path = "results/" * rel_path
     # create folder when it does not exist
     if !isdir(rel_path)
         mkdir(rel_path)
@@ -100,7 +106,7 @@ function write_results(m::JuMP.Model, output_prefix::String="", output_suffix::S
     if output_suffix != ""
         meta_file_name = meta_file_name * "-" * output_suffix
     end
-    meta_file = "results/revamp-start-up/" * meta_file_name * ".csv"
+    meta_file = "results/" * meta_file_name * ".csv"
     if isfile(meta_file)
         CSV.write(meta_file, df_meta, append=true)
     else

@@ -56,7 +56,7 @@ function gen_NPV_df(m, df_cost, df_binary)
                             VOM_total + start_up_cost_total
     end
 
-    annual_CO2_credit = - sum(df_cost[!, "CO2_credit"])
+    annual_CO2_credit = sum(df_cost[!, "CO2_credit"])
     annual_power_sell = sum(df_cost[!, "power_profit"])
     # sell
     S = zeros(22, 1)

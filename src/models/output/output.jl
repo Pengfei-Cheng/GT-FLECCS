@@ -16,9 +16,8 @@ end
 include("binary.jl")
 include("CO2.jl")
 include("operation_cost.jl")
-include("DAC_FG.jl")
 include("DAC_air.jl")
-include("disjunctive_vars.jl")
+include("disaggregated_vars.jl")
 include("power.jl")
 include("steam.jl")
 include("DAC_costing.jl")
@@ -32,9 +31,8 @@ function write_results(m::JuMP.Model, output_prefix::String="", output_suffix::S
     df_power = gen_power_df(m)
     df_steam = gen_steam_df(m)
     df_operation_cost = gen_operation_cost_df(m)
-    df_DAC_FG = gen_DAC_FG_df(m)
     df_DAC_air = gen_DAC_air_df(m)
-    df_disjunctive_vars = gen_disjunctive_var_df(m)
+    df_disaggregated_vars = gen_disaggregated_var_df(m)
     df_binary = gen_binary_df(m)
     df_DAC_costing = gen_DAC_cost_df(m)
     df_NPV, ddf_overall_profit_cost = gen_NPV_df(m, df_operation_cost, df_binary)
@@ -58,11 +56,10 @@ function write_results(m::JuMP.Model, output_prefix::String="", output_suffix::S
         ("results_CO2", df_CO2),
         ("results_power", df_power),
         ("results_steam", df_steam),
-        ("results_DAC_FG", df_DAC_FG),
         ("results_DAC_air", df_DAC_air),
         ("results_operation_cost", df_operation_cost),
         ("results_binary_vars", df_binary),
-        ("results_disjunctive", df_disjunctive_vars),
+        ("results_disaggregated", df_disaggregated_vars),
         ("results_DAC_costing", df_DAC_costing),
         ("NPV", df_NPV),
         ("overall_profit_cost", ddf_overall_profit_cost)
@@ -90,7 +87,7 @@ function write_results(m::JuMP.Model, output_prefix::String="", output_suffix::S
         CO2_CREDIT,
         SCENARIO_NAME,
         round(solve_time(m), digits=0),
-        value(m[:x_sorbent_m]),
+        value(m[:x_sorbent_total]),
         relative_gap(m)
         ]
     )

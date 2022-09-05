@@ -1,20 +1,11 @@
 # setups and cache
 *.vscode
 *.DS_Store
-Manifest.toml
-Project.toml
 **pycache**
 venv/
 # data
-*.lp
 *.csv
-!src/archive/*.csv
 !src/resources/overall-price-signals.csv
-!src/regression/*.csv
-src/results/*
-src/post_processing/notebooks/*.xlsx
-# figures
-src/regression/*.png
-results/*/*.png
+!src/regression/coefs.csv
 # others
 *playground*

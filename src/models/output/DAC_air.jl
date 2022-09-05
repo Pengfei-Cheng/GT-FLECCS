@@ -2,12 +2,12 @@ function gen_DAC_air_df(m)
 
     vars = [
         "time",
-        "x_F", "x_S", "x_A0", "x_A1", "x_R"
+        "x_sorbent_F", "x_sorbent_S", "x_sorbent_A0", "x_sorbent_A1", "x_sorbent_R"
     ]
 
     df_DAC_air = DataFrame(map(generate_row_map, vars))
 
-    for i in 0:n_hour
+    for i in set_hour
 
         for j in set_quarter
 

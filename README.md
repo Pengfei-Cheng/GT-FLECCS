@@ -78,8 +78,7 @@ include("src/models/model.jl")
 |Location|File name|Function|Source|
 |---|---|---|---|
 |`src/regression/`|`coefs.csv`|coefficients from simulation (only considers 50% and 100% load), currently in use|linear regression|
-|`src/regression/`|`coefs-4-pieces.csv`|coefficients from simulation considering 4 pieces|linear regression|
-|`src/resources/`|`NGCC Performance - with and without Carbon Capture 12 15 2021.xlsx`|system performance coefficients|Howard Hendrix|
+|`src/resources/`|`NGCC_performance.xlsx`|system performance coefficients|Howard Hendrix|
 |`src/resources/`|`overall-price-signals.csv`|all sets of electricity price series|Princeton team and NREL team|
 |`src/models/params`|`.jl` files|other data|Georgia Tech FLECCS team|
 

@@ -11,31 +11,31 @@ Pengfei Cheng
 """
 
 function add_overall_var_constraints(m)
-    x_load_factor = m[:x_load_factor]
-    x_load_factor_D = m[:x_load_factor_D]
+    x_load = m[:x_load]
+    x_load_D = m[:x_load_D]
     x_fuel = m[:x_fuel]
     x_fuel_D = m[:x_fuel_D]
-    x_fuel_CO2 = m[:x_fuel_CO2]
-    x_emission_D = m[:x_emission_D]
+    x_CO2_flue = m[:x_CO2_flue]
+    x_CO2_D_flue = m[:x_CO2_D_flue]
     x_power_HP = m[:x_power_HP]
-    x_power_HP_D = m[:x_power_HP_D]
+    x_power_D_HP = m[:x_power_D_HP]
     x_power_IP = m[:x_power_IP]
-    x_power_IP_D = m[:x_power_IP_D]
+    x_power_D_IP = m[:x_power_D_IP]
     x_power_aux = m[:x_power_aux]
-    x_power_aux_D = m[:x_power_aux_D]
+    x_power_D_aux = m[:x_power_D_aux]
     x_steam_DAC_base = m[:x_steam_DAC_base]
-    x_steam_DAC_base_D = m[:x_steam_DAC_base_D]
+    x_steam_D_DAC_base = m[:x_steam_D_DAC_base]
     x_steam_allocable = m[:x_steam_allocable]
-    x_steam_allocable_D = m[:x_steam_allocable_D]
+    x_steam_D_allocable = m[:x_steam_D_allocable]
     
     # 1. CONSTRAINTS FOR OVERALL VARIABLES
 
     # load factor
     @constraint(
         m ,eq_total_load_factor[i = set_hour_0],
-        x_load_factor[i]
+        x_load[i]
         ==
-        sum(x_load_factor_D[i, mode] for mode in set_mode)
+        sum(x_load_D[i, mode] for mode in set_mode)
     )
 
     # fuel consumption
@@ -49,9 +49,9 @@ function add_overall_var_constraints(m)
     # CO2 emission rate
     @constraint(
         m, eq_total_CO2_emission_rate[i = set_hour_0], 
-        x_fuel_CO2[i]
+        x_CO2_flue[i]
         ==
-        sum(x_emission_D[i, mode] for mode in set_mode)
+        sum(x_CO2_D_flue[i, mode] for mode in set_mode)
     )
 
     # HP steam turbine power
@@ -59,7 +59,7 @@ function add_overall_var_constraints(m)
         m, eq_total_power_HP[i = set_hour_0], 
         x_power_HP[i]
         ==
-        sum(x_power_HP_D[i, mode] for mode in set_mode)
+        sum(x_power_D_HP[i, mode] for mode in set_mode)
     )
 
     # IP steam turbine power
@@ -67,7 +67,7 @@ function add_overall_var_constraints(m)
         m, eq_total_power_IP[i = set_hour_0], 
         x_power_IP[i]
         ==
-        sum(x_power_IP_D[i, mode] for mode in set_mode)
+        sum(x_power_D_IP[i, mode] for mode in set_mode)
     )
 
     # DAC base steam
@@ -75,7 +75,7 @@ function add_overall_var_constraints(m)
         m, eq_total_DAC_base_duty[i = set_hour_0],
         x_steam_DAC_base[i]
         ==
-        sum(x_steam_DAC_base_D[i, mode] for mode in set_mode)
+        sum(x_steam_D_DAC_base[i, mode] for mode in set_mode)
     )
 
     # allocable steam
@@ -83,8 +83,8 @@ function add_overall_var_constraints(m)
         m, eq_total_steam_allocable[i = set_hour_0],
         x_steam_allocable[i]
         ==
-        # x_steam_allocable_D[i, dispatch_idx]
-        sum(x_steam_allocable_D[i, mode] for mode in set_mode)
+        # x_steam_D_allocable[i, dispatch_idx]
+        sum(x_steam_D_allocable[i, mode] for mode in set_mode)
     )
 
     # auxiliary power
@@ -92,6 +92,6 @@ function add_overall_var_constraints(m)
         m, eq_total_power_aux[i = set_hour_0], 
         x_power_aux[i]
         ==
-        sum(x_power_aux_D[i, mode] for mode in set_mode)
+        sum(x_power_D_aux[i, mode] for mode in set_mode)
     )
 end

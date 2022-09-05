@@ -9,6 +9,33 @@ println("*" ^ 30 * "   Pengfei Cheng   " * "*" ^ 31)
 println("*" ^ 80 * "\n")
 
 # ------------------------------------------------------------------------------
+
+# PARAMETERS TO ADJUST
+
+# solving time limit
+TIME_LIMIT = 3600
+# solving optimality gap
+GAP = 0.01
+
+# natural gas price, $/MMBtu
+global cost_NG = 3.83
+# global cost_NG = 4.5
+# global cost_NG = 6.0
+
+# whether to limit the start-up times to 5
+global limit_start_up = true
+
+# how many scenarios to run
+# all 36 scenarios
+SCENARIOS = "ALL"
+# A single scenario (for testing)
+# SCENARIOS = "ONE"
+
+# prefix and suffix for solution folder
+PREFIX = "NG-383"
+SUFFIX = ""
+
+# ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 
@@ -35,36 +62,17 @@ using CSV
 
 include("variables.jl")
 include("constraints/operation_mode_logic.jl")
-include("constraints/disjunctive_constraints.jl")
+include("constraints/disaggregated_constraints.jl")
 include("constraints/overall_var_constraints.jl")
 include("constraints/PCC_constraints.jl")
 include("constraints/power_constraints.jl")
 include("constraints/steam_split.jl")
 include("constraints/compress_vent_constraints.jl")
-include("constraints/DAC_air_constraints.jl")
-include("constraints/DAC_FG_constraints.jl")
+include("constraints/DAC_constraints.jl")
 include("constraints/DAC_costing_constraints.jl")
 include("constraints/OM_costing.jl")
 include("obj.jl")
 include("output/output.jl")
-
-# ------------------------------------------------------------------------------
-
-# parameters to adjust
-# profit from original B31A plant
-# ! this should be from the B31A model
-PROFIT_B31A = 0
-# solving time limit
-TIME_LIMIT = 3600
-# natural gas price, $/MMBtu
-global cost_NG = 3.83
-# global cost_NG = 4.5
-# global cost_NG = 6.0
-# whether to limit the start-up times to 5
-global limit_start_up = true
-
-PREFIX = "START-5-NG-383"
-SUFFIX = ""
 
 # ------------------------------------------------------------------------------
 
@@ -103,8 +111,11 @@ full_scenarios = vcat(scenarios_1, scenarios_2)
 # single scenario array for test
 test_scenarios = [(100, "MiNg_100_NYISO")]
 
-# scenarios = test_scenarios
-scenarios = full_scenarios
+if SCENARIOS == "ALL"
+    scenarios = full_scenarios
+else
+    scenarios = test_scenarios
+end
 
 # ------------------------------------------------------------------------------
 
@@ -131,6 +142,8 @@ for (CO2_credit, scenario_name) in scenarios
     global set_hour = 1:n_hour  # start from 1
 
     # start-up cost, $
+    # CO2 emission during start-up: 100.45 tonne
+    # fuel consumption during start-up: 16958.58 MMBtu
     global cost_start_up = 100.45 * CO2_CREDIT + 16958.58 * cost_NG
 
     # --------------------------------------------------------------------------
@@ -144,14 +157,13 @@ for (CO2_credit, scenario_name) in scenarios
     declare_variables(m)
 
     add_operation_mode_logic_constraints(m)
-    add_disjunctive_constraints(m)
+    add_disaggregated_constraints(m)
     add_overall_var_constraints(m)
     add_PCC_constraints(m)
     add_power_constraints(m)
     add_steam_split_constraints(m)
     add_compress_vent_constraints(m)
-    add_DAC_air_constraints(m)
-    add_DAC_FG_constraints(m)
+    add_DAC_constraints(m)
     add_DAC_costing_constraints(m)
     add_OM_costing_constraints(m)
 
@@ -170,7 +182,7 @@ for (CO2_credit, scenario_name) in scenarios
 
     # set optimizer options
     set_optimizer(m, Gurobi.Optimizer)
-    set_optimizer_attribute(m, "MIPGap", 0.01)
+    set_optimizer_attribute(m, "MIPGap", GAP)
 
     # specify branch priority: y first
     y = m[:y]

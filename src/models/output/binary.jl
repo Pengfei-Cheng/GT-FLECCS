@@ -7,7 +7,7 @@ Create the DataFrame for the binary variables.
 
 function gen_binary_df(m)
 
-    binary_vars = ["y", "z", "z2"]
+    binary_vars = ["y", "z0", "z"]
 
     # add columns
     l0 = []
@@ -20,7 +20,7 @@ function gen_binary_df(m)
     df_binary = DataFrame(l0)
     # add the values to the DataFrame
 
-    for i in 0:n_hour
+    for i in set_hour
         local l0 = []
         for v in binary_vars
             s = Symbol(v)

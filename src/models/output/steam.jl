@@ -3,13 +3,13 @@ function gen_steam_df(m)
     vars = [
         "x_steam_PCC",
         "x_steam_DAC_total", "x_steam_DAC",
-        "x_steam_DAC_slack", "x_steam_allocable", "x_steam_DAC_base",
-        "x_steam_DAC_extra", "x_steam_for_LP"
+        "x_steam_allocable", "x_steam_DAC_base",
+        "x_steam_DAC_extra", "x_steam_LP"
     ]
 
     df_steam = DataFrame(map(generate_row_map, vars))
 
-    for i in 0:n_hour
+    for i in set_hour
 
         local l0 = []
 

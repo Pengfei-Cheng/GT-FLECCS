@@ -1,9 +1,9 @@
 function gen_DAC_cost_df(m)
 
     vars = [
-        "x_sorbent_m_DAC_FG", "x_sorbent_m", "cost_sorbent",
-        "x_adsorb_max_air_rate_FG", "x_adsorb_max_air_rate_air",
-        "cost_adsorb_system", "TPC_DAC"
+        "x_sorbent_total", "x_cost_sorbent",
+        "x_air_adsorb_max",
+        "x_cost_adsorb", "x_cost_DAC_TPC"
     ]
 
     df_DAC_costing = DataFrame(map(generate_row_map, vars))

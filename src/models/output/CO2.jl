@@ -8,15 +8,14 @@ Output CO2-related results.
 function gen_CO2_df(m)
 
     vars = [
-        "x_fuel_CO2", 
-        "x_CO2_PCC_cap", "x_CO2_PCC_out", "x_CO2_PCC_vent",
-        # "x_CO2_DAC_FG_in", "x_DAC_FG_CO2_cap", "x_DAC_FG_CO2_vent",
-        "x_CO2_DAC_cap", "x_vent_CO2"
+        "x_CO2_flue", 
+        "x_CO2_PCC", "x_CO2_PCC_out", "x_CO2_vent_PCC",
+        "x_CO2_DAC", "x_CO2_cap_total"
     ]
 
     df_CO2 = DataFrame(map(generate_row_map, vars))
 
-    for i in 0:n_hour
+    for i in set_hour
 
         local l0 = []
 

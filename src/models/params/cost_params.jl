@@ -13,7 +13,7 @@ using DataFrames
 using CSV
 
 # CO2 transportation price, USD/tonne CO2
-global cost_CO2_transportation = 10
+global a_cost_CO2_TS = 10
 
 # interest rate, for NPV calculation
 global int_r = 0.0294
@@ -30,8 +30,8 @@ global a_VOM_NGCC = 8751461 / 0.85 / 24 / 365 / 100
 # PCC, $/load factor
 global a_VOM_PCC = 18527935 / 24 / 365 / 100
 # DAC, $/tonne CO2 captured
-global a_VOM_DAC = 9
+global a_cost_DAC_VOM = 9
 # PCC compressor, $/load factor
-global a_VOM_PCC_compressor = 1745198 / 24 / 365 / 100
+global a_cost_PCC_compr_VOM = 1745198 / 24 / 365 / 100
 # DAC compressor, $/tonne CO2 captured
-global a_VOM_DAC_compressor = 861964 / 24 / 365 / 140
+global a_cost_DAC_compr_VOM = 861964 / 24 / 365 / 140

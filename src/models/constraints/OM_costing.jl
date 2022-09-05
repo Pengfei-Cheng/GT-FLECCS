@@ -7,61 +7,61 @@ Pengfei Cheng
 """
 
 function add_OM_costing_constraints(m)
-    FOM_DAC = m[:FOM_DAC]
-    TPC_DAC = m[:TPC_DAC]
-    VOM_NGCC = m[:VOM_NGCC]
-    x_load_factor = m[:x_load_factor]
-    VOM_PCC = m[:VOM_PCC]
-    VOM_DAC = m[:VOM_DAC]
-    x_CO2_DAC_cap = m[:x_CO2_DAC_cap]
-    VOM_PCC_compressor = m[:VOM_PCC_compressor]
-    VOM_DAC_compressor = m[:VOM_DAC_compressor]
+    x_cost_DAC_FOM = m[:x_cost_DAC_FOM]
+    x_cost_DAC_TPC = m[:x_cost_DAC_TPC]
+    x_cost_NGCC_VOM = m[:x_cost_NGCC_VOM]
+    x_load = m[:x_load]
+    x_cost_PCC_VOM = m[:x_cost_PCC_VOM]
+    x_cost_DAC_VOM = m[:x_cost_DAC_VOM]
+    x_CO2_DAC = m[:x_CO2_DAC]
+    x_cost_PCC_compr_VOM = m[:x_cost_PCC_compr_VOM]
+    x_cost_DAC_compr_VOM = m[:x_cost_DAC_compr_VOM]
 
     # FOM of DAC
     @constraint(
         m, eq_FOM_DAC,
-        FOM_DAC
+        x_cost_DAC_FOM
         ==
-        TPC_DAC * 0.05 + 2 * 110000
+        x_cost_DAC_TPC * 0.05 + 2 * 110000
     )
 
     # VOM of NGCC
     @constraint(
         m, eq_VOM_NGCC[i = set_hour_0],
-        VOM_NGCC[i]
+        x_cost_NGCC_VOM[i]
         ==
-        a_VOM_NGCC * x_load_factor[i]
+        a_cost_NGCC_VOM * x_load[i]
     )
 
     # VOM of PCC
     @constraint(
-        m, eq_VOM_PCC[i = set_hour_0],
-        VOM_PCC[i]
+        m, eq_cost_PCC_VOM[i = set_hour_0],
+        x_cost_PCC_VOM[i]
         ==
-        a_VOM_PCC * x_load_factor[i]
+        a_VOM_PCC * x_load[i]
     )
 
     # VOM of DAC
     @constraint(
-        m, eq_VOM_DAC[i = set_hour_0],
-        VOM_DAC[i]
+        m, eq_cost_DAC_VOM[i = set_hour_0],
+        x_cost_DAC_VOM[i]
         ==
-        a_VOM_DAC * sum(x_CO2_DAC_cap[i, j] for j in set_quarter)
+        a_cost_DAC_VOM * sum(x_CO2_DAC[i, j] for j in set_quarter)
     )
 
     # VOM of PCC compressor
     @constraint(
-        m, eq_VOM_PCC_compressor[i = set_hour_0],
-        VOM_PCC_compressor[i]
+        m, eq_cost_PCC_compr_VOM[i = set_hour_0],
+        x_cost_PCC_compr_VOM[i]
         ==
-        a_VOM_PCC_compressor * x_load_factor[i]
+        a_cost_PCC_compr_VOM * x_load[i]
     )
 
     # VOM of DAC compressor
     @constraint(
         m, eq_VOM_DAC_compressor[i = set_hour_0],
-        VOM_DAC_compressor[i]
+        x_cost_DAC_compr_VOM[i]
         ==
-        a_VOM_DAC_compressor * sum(x_CO2_DAC_cap[i, j] for j in set_quarter)
+        a_cost_DAC_compr_VOM * sum(x_CO2_DAC[i, j] for j in set_quarter)
     )
 end

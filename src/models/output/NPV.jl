@@ -7,8 +7,8 @@ Create the DataFrame for NPV terms.
 
 function gen_NPV_df(m, df_cost, df_binary)
 
-    TPC_DAC = value(m[:TPC_DAC])
-    FOM_DAC = value(m[:FOM_DAC])
+    x_cost_DAC_TPC = value(m[:x_cost_DAC_TPC])
+    x_cost_DAC_FOM = value(m[:x_cost_DAC_FOM])
 
     # year
     year = 2021:2042
@@ -16,7 +16,7 @@ function gen_NPV_df(m, df_cost, df_binary)
     # total TOC w/o DAC
     TOC_wo_DAC = 1142222643
     # DAC TOC
-    TOC_DAC = TPC_DAC * (1 + 0.0311 + 0.0066 + 0.1779)
+    TOC_DAC = x_cost_DAC_TPC * (1 + 0.0311 + 0.0066 + 0.1779)
     TOC_total = TOC_wo_DAC + TOC_DAC
     # capital expenditure
     C_TDC = zeros(22, 1)
@@ -40,15 +40,15 @@ function gen_NPV_df(m, df_cost, df_binary)
     CO2_transportation_cost = sum(df_cost[!, "CO2_transportation_cost"])
     # annual FOM
     FOM_wo_DAC = 47965372
-    FOM_total = FOM_wo_DAC + FOM_DAC
+    FOM_total = FOM_wo_DAC + x_cost_DAC_FOM
     # annual VOM
     VOM_total = (
-        sum(df_cost[!, "VOM_NGCC"]) + sum(df_cost[!, "VOM_PCC"]) +
-        sum(df_cost[!, "VOM_DAC"]) + sum(df_cost[!, "VOM_PCC_compressor"]) +
-        sum(df_cost[!, "VOM_DAC_compressor"])
+        sum(df_cost[!, "x_cost_NGCC_VOM"]) + sum(df_cost[!, "x_cost_PCC_VOM"]) +
+        sum(df_cost[!, "x_cost_DAC_VOM"]) + sum(df_cost[!, "x_cost_PCC_compr_VOM"]) +
+        sum(df_cost[!, "x_cost_DAC_compr_VOM"])
     )
     # annual start-up cost
-    start_up_cost_total = cost_start_up * sum(df_binary[!, "z"])
+    start_up_cost_total = cost_start_up * sum(df_binary[!, "z0"])
     # cost excluding depreciation
     COST_EXCLUDE_D = zeros(22, 1)
     for i in 3:22
@@ -60,7 +60,7 @@ function gen_NPV_df(m, df_cost, df_binary)
     annual_power_sell = sum(df_cost[!, "power_profit"])
     # sell
     S = zeros(22, 1)
-    S_single = annual_CO2_credit + annual_power_sell - PROFIT_B31A
+    S_single = annual_CO2_credit + annual_power_sell
     for i in 3:22
         S[i] = S_single
     end

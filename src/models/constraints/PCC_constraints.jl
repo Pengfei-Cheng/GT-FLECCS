@@ -13,7 +13,7 @@ Pengfei Cheng
 function add_PCC_constraints(m)
     x_CO2_PCC = m[:x_CO2_PCC]
     x_CO2_flue = m[:x_CO2_flue]
-    x_CO2_PCC_out = m[:x_CO2_PCC_out]
+    x_CO2_vent_PCC = m[:x_CO2_vent_PCC]
     x_steam_PCC = m[:x_steam_PCC]
     x_power_PCC = m[:x_power_PCC]
 
@@ -30,7 +30,7 @@ function add_PCC_constraints(m)
     # 2. PCC CO2 OUTLET CONCENTRATION
     @constraint(
         m, eq_PCC_CO2_out[i = set_hour_0], 
-        x_CO2_PCC_out[i]
+        x_CO2_vent_PCC[i]
         ==
         x_CO2_flue[i] - x_CO2_PCC[i]
     )

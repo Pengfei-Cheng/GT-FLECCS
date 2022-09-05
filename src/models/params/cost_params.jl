@@ -26,9 +26,9 @@ global tax_r = 0.2574
 
 # VOMs
 # NGCC, $/load factor
-global a_VOM_NGCC = 8751461 / 0.85 / 24 / 365 / 100
+global a_cost_NGCC_VOM = 8751461 / 0.85 / 24 / 365 / 100
 # PCC, $/load factor
-global a_VOM_PCC = 18527935 / 24 / 365 / 100
+global a_cost_PCC_VOM = 18527935 / 24 / 365 / 100
 # DAC, $/tonne CO2 captured
 global a_cost_DAC_VOM = 9
 # PCC compressor, $/load factor

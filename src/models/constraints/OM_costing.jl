@@ -38,7 +38,7 @@ function add_OM_costing_constraints(m)
         m, eq_cost_PCC_VOM[i = set_hour_0],
         x_cost_PCC_VOM[i]
         ==
-        a_VOM_PCC * x_load[i]
+        a_cost_PCC_VOM * x_load[i]
     )
 
     # VOM of DAC

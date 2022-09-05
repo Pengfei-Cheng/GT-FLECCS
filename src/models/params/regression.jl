@@ -44,3 +44,6 @@ global b_steam_DAC_base = df[1, "b"]
 df = filter(row -> row.y == "allocable_steam", df_coef)
 global a_steam_alloc = df[1, "a"]
 global b_steam_alloc = df[1, "b"]
+
+# ratio of power generated from LP steam turbine by steam amount, MW / (MMBtu/hr)
+global a_power_LP = 0.09062

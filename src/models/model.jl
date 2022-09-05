@@ -15,7 +15,7 @@ println("*" ^ 80 * "\n")
 # solving time limit
 TIME_LIMIT = 3600
 # solving optimality gap
-GAP = 0.01
+GAP = 0.1
 
 # natural gas price, $/MMBtu
 global cost_NG = 3.83
@@ -27,9 +27,9 @@ global limit_start_up = true
 
 # how many scenarios to run
 # all 36 scenarios
-SCENARIOS = "ALL"
+# SCENARIOS = "ALL"
 # A single scenario (for testing)
-# SCENARIOS = "ONE"
+SCENARIOS = "ONE"
 
 # prefix and suffix for solution folder
 PREFIX = "NG-383"

@@ -12,11 +12,9 @@ For the full model description, please contact [Pengfei Cheng](pengfeicheng@gate
 
 ## Branches
 
-There are currently three 3 branches:
+There are currently 2 branches:
 - `main`: the most up-to-date one with all the features 
-- `B31A`: contains the optimization model for the operations of B31A (unretrofitted NGCC)
-- `surrogate`: contains an optimization model based on an old version of `main`
-to generate solutions as machine learning model input. Currently NOT maintained.
+- `base-NGCC`: contains the optimization model for the operations of B31A (unretrofitted NGCC)
 
 ## `main` Branch Layout
 
@@ -30,9 +28,7 @@ to generate solutions as machine learning model input. Currently NOT maintained.
 │       ├── params
 │       ├── model.jl                    # main file
 │       ├── obj.jl
-│       ├── princeton-genx-fleccs6.jl   # model description for Princeton GenX framework
 │       └── variables.jl
-│   ├── NPV_IRR                         # scripts for calculating NPVs with fixed IRR
 │   ├── post_processing                 # post-processing scripts
 │   ├── regression                      # regression scripts for data from simulation
 │   └── resources                       # other resource files
@@ -78,8 +74,7 @@ include("src/models/model.jl")
 |Location|File name|Function|Source|
 |---|---|---|---|
 |`src/regression/`|`coefs.csv`|coefficients from simulation (only considers 50% and 100% load), currently in use|linear regression|
-|`src/regression/`|`coefs-4-pieces.csv`|coefficients from simulation considering 4 pieces|linear regression|
-|`src/resources/`|`NGCC Performance - with and without Carbon Capture 12 15 2021.xlsx`|system performance coefficients|Howard Hendrix|
+|`src/resources/`|`NGCC_performance.xlsx`|system performance coefficients|Howard Hendrix|
 |`src/resources/`|`overall-price-signals.csv`|all sets of electricity price series|Princeton team and NREL team|
 |`src/models/params`|`.jl` files|other data|Georgia Tech FLECCS team|
 

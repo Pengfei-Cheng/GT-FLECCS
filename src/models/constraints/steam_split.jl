@@ -49,7 +49,7 @@ function add_steam_split_constraints(m)
         m, eq_DAC_steam_slack_int[i = set_hour_0], 
         x_steam_DAC_total[i] 
         >=
-        - sum(x_steam_DAC[i, j] for j in set_quarter)
+        sum(x_steam_DAC[i, j] for j in set_quarter)
     )
 
     # --------------------------------------------------------------------------

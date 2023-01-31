@@ -19,9 +19,3 @@ set_quarter = list(range(n_slice))
 set_mode = [start_up_idx, dispatch_idx]
 start_up_h = 9
 set_start_up_hour = list(range(1, start_up_h + 1))
-
-# total hours
-n_hour = 24 * 364
-# set of hours
-set_hour_0 = list(range(n_hour + 1))
-set_hour = list(range(1, n_hour + 1))

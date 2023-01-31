@@ -7,7 +7,10 @@ Pengfei Cheng
 """
 
 # load factor range for the normal dispatch mode
-x_range = [50.0, 100.0]
+x_range = {
+    1: 50.0,
+    2: 100.0,
+}
 
 # extreme points
 x_range_extreme_points = [1, 2]

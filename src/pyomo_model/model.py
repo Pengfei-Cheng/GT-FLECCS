@@ -9,10 +9,11 @@ from pyomo.environ import *
 from itertools import product
 from .variables import declare_variables
 from .constraints import *
+from .output import write_results
 from .obj import add_objective_function
 
 logger = logging.getLogger(__name__)
-# logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 logger.info("*" * 80)
 logger.info("*" * 18 + "   GATECH NGCC-PCC-DAC OPTIMIZATION MODEL   " + "*" * 18)
@@ -111,8 +112,8 @@ for (CO2_credit, scenario_name) in scenarios:
     SCENARIO_NAME = scenario_name
     CO2_CREDIT = CO2_credit
 
-    print("\n" + "-" * 80)
-    print("Scenario: " + SCENARIO_NAME + "\t\tCO2 credit: " + str(CO2_CREDIT))
+    logger.info("\n" + "-" * 80)
+    logger.info("Scenario: " + SCENARIO_NAME + "\t\tCO2 credit: " + str(CO2_CREDIT))
 
     # cost parameters
     # power price profile, USD/MWh
@@ -153,8 +154,8 @@ for (CO2_credit, scenario_name) in scenarios:
     # --------------------------------------------------------------------------
     # print model status
 
-    print("# variable: \t", sum(1 for _ in m.component_data_objects(Var)))
-    print("# constraint: \t", sum(1 for _ in m.component_data_objects(Constraint)))
+    logger.info(f"# variable: \t{sum(1 for _ in m.component_data_objects(Var))}")
+    logger.info(f"# constraint: \t{sum(1 for _ in m.component_data_objects(Constraint))}")
 
     # --------------------------------------------------------------------------
 
@@ -175,12 +176,14 @@ for (CO2_credit, scenario_name) in scenarios:
     # solve the problem
     results = solver.solve(m, tee=True)
 
-    print("solving time: ", round(results.solver.time, 0), " s")
+    logger.info(f"solving time: {round(results.solver.time, 0)} s")
 
-#     # --------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
-#     # output results
+    # output results
 
-#     write_results(m, PREFIX, SUFFIX)
-#     # write_results(m)
-#     println("-" ^ 80 * "\n")
+    logger.info("Writing output...")
+
+    write_results(m, PREFIX, SUFFIX, set_hour, CO2_CREDIT, cost_NG, power_price, n_month, cost_start_up, SCENARIO_NAME, results)
+
+    logger.info("Done.")

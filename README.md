@@ -1,6 +1,6 @@
 # Integrated Design and Operation Model for NGCC-PCC-DAC Retrofit
 
-This repo contains the optimization model for the NGCC-PCC-DAC retrofit design modeled in `Julia`/`Jump`.
+This repo contains the optimization model for the NGCC-PCC-DAC retrofit design modeled in `Julia/Jump` and `Python/Pyomo`.
 
 ## Main features
 - co-optimizes the design and operational decisions
@@ -12,9 +12,11 @@ For the full model description, please contact [Pengfei Cheng](pengfeicheng@gate
 
 ## Branches
 
-There are currently 2 branches:
-- `main`: the most up-to-date one with all the features 
+Currently there are 4 branches:
+- `main`: the most up-to-date one with all the features
 - `base-NGCC`: contains the optimization model for the operations of B31A (unretrofitted NGCC)
+- `pyomo-ver`: the identical model formulated in `Python/Pyomo`
+- `pyomo-SP`: the stochastic version of the model in in `Python/Pyomo`
 
 ## `main` Branch Layout
 

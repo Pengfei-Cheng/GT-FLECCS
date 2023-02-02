@@ -18,7 +18,7 @@ Currently there are 4 branches:
 - `pyomo-ver`: the identical model formulated in `Python/Pyomo`
 - `pyomo-SP`: the stochastic version of the model in in `Python/Pyomo`
 
-## `pyomo-ver` Branch Layout
+## `pyomo-SP` Branch Layout
 
 ```
 .

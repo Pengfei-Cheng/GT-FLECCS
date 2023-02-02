@@ -19,7 +19,7 @@ def add_DAC_costing_constraints(m, set_hour_0):
 
     # volume of blown air
     def eq_adsorb_air_volume(m, i, j):
-        return m.x_air_adsorb[i, j] >= (m.x_sorbent_A0[i, j] + m.x_sorbent_A1[i, j]) * sorbent_cap_DAC_air / 2 * tonne_to_g / CO2_mole_w / CO2_vol_ratio                                 # m^3 air
+        return m.x_air_adsorb[i, j] >= (m.x_sorbent_A0[i, j] + m.x_sorbent_A1[i, j]) * sorbent_cap_DAC_air / 2 * tonne_to_g / CO2_mole_w * mole_vol / CO2_vol_ratio                                 # m^3 air
     m.eq_adsorb_air_volume = Constraint(set_hour_0, set_quarter, rule=eq_adsorb_air_volume)
 
     # max adsorption air rate

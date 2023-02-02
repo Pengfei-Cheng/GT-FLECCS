@@ -108,5 +108,3 @@ def write_results(m, output_prefix, output_suffix, set_hour, cost_NG, power_pric
             df_meta.to_csv(meta_file, mode='a')
         else:
             df_meta.to_csv(meta_file)
-
-        return

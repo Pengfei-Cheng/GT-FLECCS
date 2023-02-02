@@ -34,8 +34,8 @@ logger.info("*" * 80 + "\n")
 elec_price_signal = "MiNg_150_NYISO"
 
 # number of months
-n_month = 1
-# n_month = 12
+# n_month = 1
+n_month = 12
 
 # solving time limit
 TIME_LIMIT = 3600

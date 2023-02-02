@@ -18,14 +18,14 @@ def add_DAC_costing_constraints(m, set_hour_0):
     m.eq_cost_sorbent = Constraint(rule=eq_cost_sorbent)
 
     # volume of blown air
-    def eq_adsorb_air_volume(m, i, j):
-        return m.x_air_adsorb[i, j] >= (m.x_sorbent_A0[i, j] + m.x_sorbent_A1[i, j]) * sorbent_cap_DAC_air / 2 * tonne_to_g / CO2_mole_w * mole_vol / CO2_vol_ratio                                 # m^3 air
-    m.eq_adsorb_air_volume = Constraint(set_hour_0, set_quarter, rule=eq_adsorb_air_volume)
+    def eq_adsorb_air_volume(m, i, j, s):
+        return m.x_air_adsorb[i, j, s] >= (m.x_sorbent_A0[i, j, s] + m.x_sorbent_A1[i, j, s]) * sorbent_cap_DAC_air / 2 * tonne_to_g / CO2_mole_w * mole_vol / CO2_vol_ratio
+    m.eq_adsorb_air_volume = Constraint(set_hour_0, set_quarter, set_scenario, rule=eq_adsorb_air_volume)
 
     # max adsorption air rate
-    def eq_adsorb_max_air_rate(m, i, j):
-        return m.x_air_adsorb_max >= m.x_air_adsorb[i, j] / 15 / 60  # 1 slice = 15 min = 900 s
-    m.eq_adsorb_max_air_rate = Constraint(set_hour_0, set_quarter, rule=eq_adsorb_max_air_rate)
+    def eq_adsorb_max_air_rate(m, i, j, s):
+        return m.x_air_adsorb_max >= m.x_air_adsorb[i, j, s] / 15 / 60  # 1 slice = 15 min = 900 s
+    m.eq_adsorb_max_air_rate = Constraint(set_hour_0, set_quarter, set_scenario, rule=eq_adsorb_max_air_rate)
 
     # calculate the cost of adsorption systems
     def eq_cost_adsorption_sys(m):

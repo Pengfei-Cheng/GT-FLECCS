@@ -20,31 +20,31 @@ from ..params import *
 def add_steam_split_constraints(m, set_hour_0):
 
     # 1. STEAM ALLOCATION
-    def eq_steam_allocation(m, i):
-        return m.x_steam_allocable[i] == m.x_steam_DAC_extra[i] + m.x_steam_LP[i]
-    m.eq_steam_allocation = Constraint(set_hour_0, rule=eq_steam_allocation)
+    def eq_steam_allocation(m, i, s):
+        return m.x_steam_allocable[i, s] == m.x_steam_DAC_extra[i, s] + m.x_steam_LP[i, s]
+    m.eq_steam_allocation = Constraint(set_hour_0, set_scenario, rule=eq_steam_allocation)
 
     # --------------------------------------------------------------------------
 
     # 2. TOTAL DAC STEAM
-    def eq_DAC_total_duty(m, i):
-        return m.x_steam_DAC_total[i] == m.x_steam_DAC_base[i] + m.x_steam_DAC_extra[i]
-    m.eq_DAC_total_duty = Constraint(set_hour_0, rule=eq_DAC_total_duty)
+    def eq_DAC_total_duty(m, i, s):
+        return m.x_steam_DAC_total[i, s] == m.x_steam_DAC_base[i, s] + m.x_steam_DAC_extra[i, s]
+    m.eq_DAC_total_duty = Constraint(set_hour_0, set_scenario, rule=eq_DAC_total_duty)
 
     # --------------------------------------------------------------------------
 
     # 3. DAC STEAM SLACK
     # integral over all slices within each hour
-    def eq_DAC_steam_slack_int(m, i):
-        return m.x_steam_DAC_total[i] >= sum(m.x_steam_DAC[i, j] for j in set_quarter)
-    m.eq_DAC_steam_slack_int = Constraint(set_hour_0, rule=eq_DAC_steam_slack_int)
+    def eq_DAC_steam_slack_int(m, i, s):
+        return m.x_steam_DAC_total[i, s] >= sum(m.x_steam_DAC[i, j, s] for j in set_quarter)
+    m.eq_DAC_steam_slack_int = Constraint(set_hour_0, set_scenario, rule=eq_DAC_steam_slack_int)
 
     # --------------------------------------------------------------------------
 
     # 4. STEAM RATE LIMIT
     # 15-min steam into DACs cannot exceed 1/4 of 1-hour available steam
-    def eq_DAC_steam_rate_limit(m, i, j):
-        return m.x_steam_DAC_total[i] / 4 >= m.x_steam_DAC[i, j]
-    m.eq_DAC_steam_rate_limit = Constraint(set_hour_0, set_quarter, rule=eq_DAC_steam_rate_limit)
+    def eq_DAC_steam_rate_limit(m, i, j, s):
+        return m.x_steam_DAC_total[i, s] / 4 >= m.x_steam_DAC[i, j, s]
+    m.eq_DAC_steam_rate_limit = Constraint(set_hour_0, set_quarter, set_scenario, rule=eq_DAC_steam_rate_limit)
 
     return

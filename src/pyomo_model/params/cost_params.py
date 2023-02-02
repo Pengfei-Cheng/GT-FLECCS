@@ -4,9 +4,6 @@ Cost and prices.
 
 Pengfei Cheng
 2023
-
-UPDATE:
-    04-17-2022: moved start-up cost to the main model module to allow update.
 """
 
 # CO2 transportation price, USD/tonne CO2
@@ -32,3 +29,10 @@ a_cost_DAC_VOM = 9
 a_cost_PCC_compr_VOM = 1745198 / 24 / 365 / 100
 # DAC compressor, $/tonne CO2 captured
 a_cost_DAC_compr_VOM = 861964 / 24 / 365 / 140
+
+# CO2 price, scenario dependent
+unit_CO2_price = {
+    1: 150,
+    2: 225,
+    3: 300
+}

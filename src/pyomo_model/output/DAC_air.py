@@ -16,16 +16,21 @@ def gen_DAC_air_df(m, set_hour):
         "x_sorbent_F", "x_sorbent_S", "x_sorbent_A0", "x_sorbent_A1", "x_sorbent_R"
     ]
 
-    _dict = {}
-    for var_name in vars:
-        _tmp_list = []
-        for i in set_hour:
-            for j in set_quarter:
-                if var_name == "time":
-                    _tmp_list.append(i + j * 1 / n_slice)
-                else:
-                    var = getattr(m, var_name)
-                    _tmp_list.append(value(var[i, j]))
-        _dict[var_name] = _tmp_list
+    dfs = {}
 
-    return pd.DataFrame.from_dict(_dict)
+    for s in set_scenario:
+        _dict = {}
+        for var_name in vars:
+            _tmp_list = []
+            for i in set_hour:
+                for j in set_quarter:
+                    if var_name == "time":
+                        _tmp_list.append(i + j * 1 / n_slice)
+                    else:
+                        var = getattr(m, var_name)
+                        _tmp_list.append(value(var[i, j, s]))
+            _dict[var_name] = _tmp_list
+
+        dfs[s] = pd.DataFrame.from_dict(_dict)
+
+    return dfs

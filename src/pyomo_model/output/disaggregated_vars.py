@@ -18,13 +18,18 @@ def gen_disaggregated_var_df(m, set_hour):
         "x_steam_D_DAC_base", "x_steam_D_allocable"
     ]
 
-    _dict = {}
-    for var_name in vars:
-        _tmp_dict = {}
-        for i in set_hour:
-            for j in set_mode:
-                var = getattr(m, var_name)
-                _tmp_dict[i, j] = value(var[i, j])
-        _dict[var_name] = _tmp_dict
+    dfs = {}
 
-    return pd.DataFrame.from_dict(_dict)
+    for s in set_scenario:
+        _dict = {}
+        for var_name in vars:
+            _tmp_dict = {}
+            for i in set_hour:
+                for j in set_mode:
+                    var = getattr(m, var_name)
+                    _tmp_dict[i, j] = value(var[i, j, s])
+            _dict[var_name] = _tmp_dict
+
+        dfs[s] = pd.DataFrame.from_dict(_dict)
+
+    return dfs

@@ -12,10 +12,10 @@ from ..params import *
 
 def add_OM_costing_constraints(m, set_hour_0):
 
-    # FOM of DAC
-    def eq_FOM_DAC(m):
-        return m.x_cost_DAC_FOM == m.x_cost_DAC_TPC * 0.05 + 2 * 110000
-    m.eq_FOM_DAC = Constraint(rule=eq_FOM_DAC)
+    # # FOM of DAC
+    # def eq_FOM_DAC(m):
+    #     return m.x_cost_DAC_FOM == (a_cost_sorbent * m.x_sorbent_total + a_cost_adsorb * m.x_air_adsorb_max) * 0.05 + 2 * 110000
+    # m.eq_FOM_DAC = Constraint(rule=eq_FOM_DAC)
 
     # VOM of NGCC
     def eq_VOM_NGCC(m, i, s):

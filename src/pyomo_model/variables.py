@@ -145,10 +145,12 @@ def declare_variables(m, set_hour_0):
     #    no index
 
     # amount of total sorbent for air, tonne
-    m.x_sorbent_total = Var(bounds=(0, None))
+    m.x_sorbent_total = Var(bounds=(0, 3000))
     # fix(x_sorbent_total, 2990, force=true)
-    # total cost of sorbent, $
-    m.x_cost_sorbent = Var(bounds=(0, None))
+    # TODO: remove extra variables
+    # TODO: normalize these
+    # # total cost of sorbent, $
+    # m.x_cost_sorbent = Var(bounds=(0, 220000000))
 
     # max adsorption air rate, m^3/s
     m.x_air_adsorb_max = Var(bounds=(0, None))
@@ -156,15 +158,15 @@ def declare_variables(m, set_hour_0):
     # air volume blown for DAC-air adsorption in the next slice (15 min), m^3
     m.x_air_adsorb = Var(set_hour_0, set_quarter_0, set_scenario, bounds=(0, None))
 
-    # adsorption system cost, $
-    m.x_cost_adsorb = Var(bounds=(0, None))
+    # # adsorption system cost, $
+    # m.x_cost_adsorb = Var(bounds=(0, None))
 
-    # total capital cost of DACs, $
-    # TPC
-    m.x_cost_DAC_TPC = Var(bounds=(0, None))
+    # # total capital cost of DACs, $
+    # # TPC
+    # m.x_cost_DAC_TPC = Var(bounds=(0, None))
 
-    # DAC FOM, $/yr
-    m.x_cost_DAC_FOM = Var(bounds=(0, None))
+#     # DAC FOM, $/yr
+#     m.x_cost_DAC_FOM = Var(bounds=(0, None))
 
     # VOMs, $
     m.x_cost_NGCC_VOM = Var(set_hour_0, set_scenario, bounds=(0, None))

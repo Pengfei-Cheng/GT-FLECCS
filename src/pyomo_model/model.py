@@ -7,12 +7,14 @@ import logging
 from pathlib import Path
 import pandas as pd
 from pyomo.environ import *
-from .params import unit_CO2_price, set_scenario, scenario_prob, a_cost_CO2_TS, tax_r, int_r, depreciate_r
+from .params import *
 from .variables import declare_variables
 from .constraints import *
 from .obj import add_objective_function
 from pyomo.environ import RangeSet, ConcreteModel, Var, NonNegativeReals, Binary, Constraint, Objective
-from src.main import StochasticModel
+
+import os
+from .....main import StochasticModel
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(message)s')
@@ -130,8 +132,8 @@ def const_model():
     # model transformation -----------------------------------------------------
 
     # set_scenario
-    fs_vars = ["x_sorbent_total", "x_cost_sorbent", "x_air_adsorb_max", "x_cost_adsorb", "x_cost_DAC_TPC", "x_cost_DAC_FOM"]
-    fs_cons = ['eq_cost_sorbent', 'eq_cost_adsorption_sys', 'eq_capital_cost_DAC', 'eq_FOM_DAC']
+    fs_vars = ["x_sorbent_total", "x_air_adsorb_max"]
+    fs_cons = []
 
     def _obj(m, s):
         return \
@@ -145,9 +147,9 @@ def const_model():
                     cost_start_up[s] * m.z0[i, s] - \
                     m.x_cost_NGCC_VOM[i, s] - m.x_cost_PCC_VOM[i, s] - m.x_cost_DAC_VOM[i, s] - m.x_cost_PCC_compr_VOM[i, s] - m.x_cost_DAC_compr_VOM[i, s]
                 for i in set_hour)
-                - m.x_cost_DAC_FOM
+                - ((a_cost_sorbent * m.x_sorbent_total + a_cost_adsorb * m.x_air_adsorb_max) * 0.05 + 2 * 110000)
             ) * (1 - tax_r) * sum(1 / (1 + int_r) ** j for j in range(2, 21 + 1)) \
-            - scenario_prob[s] * m.x_cost_DAC_TPC * (1 + 0.0311 + 0.0066 + 0.1779) * ( 0.3 + 0.7 / (1 + int_r) - sum(tax_r * depreciate_r * ((1 - depreciate_r) ** j) * ((1 + int_r) ** (- j - 2)) for j in range(19 + 1)) )
+            - scenario_prob[s] * (a_cost_sorbent * m.x_sorbent_total + a_cost_adsorb * m.x_air_adsorb_max) * (1 + 0.0311 + 0.0066 + 0.1779) * ( 0.3 + 0.7 / (1 + int_r) - sum(tax_r * depreciate_r * ((1 - depreciate_r) ** j) * ((1 + int_r) ** (- j - 2)) for j in range(19 + 1)) )
     objs = {s: _obj for s in set_scenario}
 
     mm = StochasticModel()

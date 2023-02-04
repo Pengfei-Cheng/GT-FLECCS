@@ -11,9 +11,8 @@ from pyomo.environ import value
 def gen_DAC_cost_df(m):
 
     vars = [
-        "x_sorbent_total", "x_cost_sorbent",
+        "x_sorbent_total",
         "x_air_adsorb_max",
-        "x_cost_adsorb", "x_cost_DAC_TPC"
     ]
 
     dict_list = []

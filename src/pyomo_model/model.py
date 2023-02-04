@@ -4,6 +4,7 @@ Pengfei Cheng
 """
 
 import logging
+from pathlib import Path
 import pandas as pd
 from pyomo.environ import *
 from itertools import product
@@ -118,7 +119,8 @@ for (CO2_credit, scenario_name) in scenarios:
 
     # cost parameters
     # power price profile, USD/MWh
-    df_power_price = pd.read_csv("src/resources/overall-price-signals.csv")
+    script_path = Path(__file__, '../..').resolve()
+    df_power_price = pd.read_csv(str(script_path.joinpath('resources/overall-price-signals.csv')))
     # dropna
     df_power_price = df_power_price.dropna()
     # choose scenario

@@ -48,7 +48,7 @@ pip install -r requirements.text
 ### Optimization solver
 To use a certain MILP solver, please install it separately.
 
-## Usage (path setting may be necessary)
+## Usage
 
 To directly run the model, simply execute `model.py`.
 
@@ -56,6 +56,10 @@ To run the model in a Jupyter notebook for exploratory programming, run:
 ```Python
 from src.pyomo_model.model import *
 ```
+
+### Configure scenarios
+
+To configure energy scenarios, see the comments in `model.py`.
 
 ## Data Sources
 

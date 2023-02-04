@@ -48,7 +48,7 @@ pip install -r requirements.text
 ### Optimization solver
 To use a certain MILP solver, please install it separately.
 
-## Usage (path setting may be necessary)
+## Usage
 
 To directly run the model, simply execute `model.py`.
 

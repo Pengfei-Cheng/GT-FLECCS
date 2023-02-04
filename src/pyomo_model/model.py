@@ -4,6 +4,7 @@ Pengfei Cheng
 """
 
 import logging
+from pathlib import Path
 import pandas as pd
 from pyomo.environ import *
 from .params import unit_CO2_price
@@ -28,17 +29,18 @@ logger.info("*" * 80 + "\n")
 # electricity price signal
 # select from:
 # ["MiNg_150_NYISO", "MiNg_150_PJM-W", "MiNg_150_CAISO", "MiNg_150_ERCOT",
-# "MiNg_100_NYISO", "MiNg_100_PJM-W", "MiNg_100_CAISO", "MiNg_100_ERCOT",
-# "MiNg_150_MISO-W", "BaseCaseTax", "HighWindTax", "HighSolarTax",
-# "WinterNYTax"]
-elec_price_signal = "MiNg_150_NYISO"
+# "MiNg_150_MISO-W",
+# "BaseCaseTax", "HighWindTax", "HighSolarTax", "WinterNYTax"
+# "MiNg_100_NYISO", "MiNg_100_PJM-W", "MiNg_100_CAISO", # "MiNg_100_ERCOT",
+# "MiNg_100_MISO-W",]
+elec_price_signal = "MiNg_150_ERCOT"
 
 # number of months
 # n_month = 1
 n_month = 12
 
 # solving time limit
-TIME_LIMIT = 3600
+TIME_LIMIT = 3600 * 8
 # solving optimality gap
 GAP = 0.01
 
@@ -81,7 +83,8 @@ logger.info("Electricity price signal: " + elec_price_signal)
 
 # cost parameters
 # power price profile, USD/MWh
-df_power_price = pd.read_csv("src/resources/overall-price-signals.csv")
+script_path = Path(__file__, '../..').resolve()
+df_power_price = pd.read_csv(str(script_path.joinpath('resources/overall-price-signals.csv')))
 # dropna
 df_power_price = df_power_price.dropna()
 # choose scenario

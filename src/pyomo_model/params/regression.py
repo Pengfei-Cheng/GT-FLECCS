@@ -7,9 +7,11 @@ Pengfei Cheng
 """
 
 import pandas as pd
+from pathlib import Path
 
 # read CSV files
-df_coef = pd.read_csv("src/regression/coefs.csv")
+script_path = Path(__file__, '../../..').resolve()
+df_coef = pd.read_csv(str(script_path.joinpath('regression/coefs.csv')))
 
 # fuel input rate coefficients, MW
 tmp_df = df_coef[df_coef["y"] == "GT_power"].iloc[0]

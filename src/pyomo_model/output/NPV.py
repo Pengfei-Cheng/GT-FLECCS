@@ -24,7 +24,7 @@ def gen_NPV_df(m, df_cost, df_binary, n_month, cost_start_up):
         # total TOC w/o DAC
         TOC_wo_DAC = 1142222643
         # DAC TOC
-        TOC_DAC = (a_cost_sorbent * value(m.x_sorbent_total) + a_cost_adsorb * value(m.x_air_adsorb_max)) * (1 + 0.0311 + 0.0066 + 0.1779)
+        TOC_DAC = (a_cost_sorbent * value(m.x_sorbent_total) * 3000 + a_cost_adsorb * value(m.x_air_adsorb_max) * 48000) * (1 + 0.0311 + 0.0066 + 0.1779)
         TOC_total = TOC_wo_DAC + TOC_DAC
         # capital expenditure
         C_TDC = np.zeros(22)
@@ -50,7 +50,7 @@ def gen_NPV_df(m, df_cost, df_binary, n_month, cost_start_up):
         cost_CO2_TS = sum(df_cost[s].loc[:, "cost_CO2_TS"]) * w
         # annual FOM
         FOM_wo_DAC = 47965372
-        FOM_total = FOM_wo_DAC + ((a_cost_sorbent * value(m.x_sorbent_total) + a_cost_adsorb * value(m.x_air_adsorb_max)) * 0.05 + 2 * 110000)
+        FOM_total = FOM_wo_DAC + ((a_cost_sorbent * value(m.x_sorbent_total) * 3000 + a_cost_adsorb * value(m.x_air_adsorb_max) * 48000) * 0.05 + 2 * 110000)
         # annual VOM
         VOM_total = df_cost[s][["cost_NGCC_VOM", "cost_PCC_VOM", "cost_DAC_VOM", "cost_PCC_compr_VOM", "cost_DAC_compr_VOM"]].sum().sum() * w
         # annual start-up cost

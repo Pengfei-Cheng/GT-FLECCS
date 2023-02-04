@@ -147,9 +147,9 @@ def const_model():
                     cost_start_up[s] * m.z0[i, s] - \
                     m.x_cost_NGCC_VOM[i, s] - m.x_cost_PCC_VOM[i, s] - m.x_cost_DAC_VOM[i, s] - m.x_cost_PCC_compr_VOM[i, s] - m.x_cost_DAC_compr_VOM[i, s]
                 for i in set_hour)
-                - ((a_cost_sorbent * m.x_sorbent_total + a_cost_adsorb * m.x_air_adsorb_max) * 0.05 + 2 * 110000)
+                - ((a_cost_sorbent * m.x_sorbent_total * 3000 + a_cost_adsorb * m.x_air_adsorb_max * 48000) * 0.05 + 2 * 110000)
             ) * (1 - tax_r) * sum(1 / (1 + int_r) ** j for j in range(2, 21 + 1)) \
-            - scenario_prob[s] * (a_cost_sorbent * m.x_sorbent_total + a_cost_adsorb * m.x_air_adsorb_max) * (1 + 0.0311 + 0.0066 + 0.1779) * ( 0.3 + 0.7 / (1 + int_r) - sum(tax_r * depreciate_r * ((1 - depreciate_r) ** j) * ((1 + int_r) ** (- j - 2)) for j in range(19 + 1)) )
+            - scenario_prob[s] * (a_cost_sorbent * m.x_sorbent_total * 3000 + a_cost_adsorb * m.x_air_adsorb_max * 48000) * (1 + 0.0311 + 0.0066 + 0.1779) * ( 0.3 + 0.7 / (1 + int_r) - sum(tax_r * depreciate_r * ((1 - depreciate_r) ** j) * ((1 + int_r) ** (- j - 2)) for j in range(19 + 1)) )
     objs = {s: _obj for s in set_scenario}
 
     mm = StochasticModel()

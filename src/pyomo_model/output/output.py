@@ -92,7 +92,7 @@ def write_results(m, output_prefix, output_suffix, set_hour, cost_NG, power_pric
             datetime.now(),
             elec_price_signal,
             results.solver.time,
-            value(m.x_sorbent_total),
+            value(m.x_sorbent_total * 3000),
             gap
         ]
 

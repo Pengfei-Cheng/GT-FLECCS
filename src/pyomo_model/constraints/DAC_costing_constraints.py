@@ -19,7 +19,7 @@ def add_DAC_costing_constraints(m, set_hour_0):
 
     # max adsorption air rate
     def eq_adsorb_max_air_rate(m, i, j, s):
-        return m.x_air_adsorb_max >= m.x_air_adsorb[i, j, s] / 15 / 60  # 1 slice = 15 min = 900 s
+        return m.x_air_adsorb_max * 48000 >= m.x_air_adsorb[i, j, s] / 15 / 60  # 1 slice = 15 min = 900 s
     m.eq_adsorb_max_air_rate = Constraint(set_hour_0, set_quarter, set_scenario, rule=eq_adsorb_max_air_rate)
 
     return

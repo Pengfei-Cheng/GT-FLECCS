@@ -59,7 +59,7 @@ def add_DAC_constraints(m, set_hour_0, set_hour, n_hour):
         return m.x_sorbent_A1[0, 0, s] == 0
     m.eq_A1_init = Constraint(set_scenario, rule=eq_A1_init)
     def eq_F_init(m, s):
-        return m.x_sorbent_F[0, 0, s] == m.x_sorbent_total
+        return m.x_sorbent_F[0, 0, s] == m.x_sorbent_total * 3000
     m.eq_F_init = Constraint(set_scenario, rule=eq_F_init)
     def eq_S_init(m, s):
         return m.x_sorbent_S[0, 0, s] == 0
@@ -72,7 +72,7 @@ def add_DAC_constraints(m, set_hour_0, set_hour, n_hour):
         return m.x_sorbent_A1[n_hour, n_slice, s] == 0
     m.eq_A1_end = Constraint(set_scenario, rule=eq_A1_end)
     def eq_f_end(m, s):
-        return m.x_sorbent_F[n_hour, n_slice, s] == m.x_sorbent_total
+        return m.x_sorbent_F[n_hour, n_slice, s] == m.x_sorbent_total * 3000
     m.eq_f_end = Constraint(set_scenario, rule=eq_f_end)
     def eq_s_end(m, s):
         return m.x_sorbent_S[n_hour, n_slice, s] == 0

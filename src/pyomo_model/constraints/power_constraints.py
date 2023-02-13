@@ -11,11 +11,11 @@ Pengfei Cheng
 5. net power output
 """
 
-from pyomo.environ import *
+from pyomo.environ import Constraint
 from ..params import *
 
 
-def add_power_constraints(m, set_hour_0):
+def add_power_constraints(m, set_hour_0, set_scenario):
 
     # 1. POWER FROM LP STEAM TURBINE
     def eq_power_LP(m, i, s):

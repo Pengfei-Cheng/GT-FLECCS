@@ -31,8 +31,4 @@ a_cost_PCC_compr_VOM = 1745198 / 24 / 365 / 100
 a_cost_DAC_compr_VOM = 861964 / 24 / 365 / 140
 
 # CO2 price, scenario dependent
-unit_CO2_price = {
-    1: 150,
-    2: 225,
-    3: 300
-}
+unit_CO2_price = [150, 225, 300]

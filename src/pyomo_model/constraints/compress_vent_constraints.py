@@ -10,10 +10,10 @@ Pengfei Cheng
 """
 
 
-from pyomo.environ import *
+from pyomo.environ import Constraint
 from ..params import *
 
-def add_compress_vent_constraints(m, set_hour_0):
+def add_compress_vent_constraints(m, set_hour_0, set_scenario):
 
     # 1. CO2 compression amount
     # integral over all slices within each hour

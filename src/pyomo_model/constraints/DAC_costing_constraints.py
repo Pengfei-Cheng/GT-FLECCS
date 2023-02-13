@@ -6,11 +6,11 @@ Pengfei Cheng
 2022
 """
 
-from pyomo.environ import *
+from pyomo.environ import Constraint
 from ..params import *
 
 
-def add_DAC_costing_constraints(m, set_hour_0):
+def add_DAC_costing_constraints(m, set_hour_0, set_scenario):
 
     # volume of blown air
     def eq_adsorb_air_volume(m, i, j, s):

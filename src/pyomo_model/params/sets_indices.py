@@ -19,13 +19,3 @@ set_quarter = list(range(n_slice))
 set_mode = [start_up_idx, dispatch_idx]
 start_up_h = 9
 set_start_up_hour = list(range(1, start_up_h + 1))
-
-# SP version scenarios: different CO2 prices
-set_scenario = [1, 2, 3]
-
-# probability of each scenario
-scenario_prob = {
-    1: 1 / 3,
-    2: 1 / 3,
-    3: 1 / 3,
-}

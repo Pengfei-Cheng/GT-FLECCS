@@ -10,11 +10,11 @@ Pengfei Cheng
         allocable steam
 """
 
-from pyomo.environ import *
+from pyomo.environ import Constraint
 from ..params import *
 
 
-def add_overall_var_constraints(m, set_hour_0):
+def add_overall_var_constraints(m, set_hour_0, set_scenario):
 
     # 1. CONSTRAINTS FOR OVERALL VARIABLES
 

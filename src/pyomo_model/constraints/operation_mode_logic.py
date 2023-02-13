@@ -14,11 +14,11 @@ UPDATE:
     06-08-2022: added start-up time limitation constraint
 """
 
-from pyomo.environ import *
+from pyomo.environ import Constraint
 from ..params import *
 
 
-def add_operation_mode_logic_constraints(m, limit_start_up, set_hour_0, set_hour):
+def add_operation_mode_logic_constraints(m, limit_start_up, set_hour_0, set_hour, set_scenario):
 
     # 1. LAM CONSTRAINT: DISPATCH ONLY, SUM OF EXTREME POINTS IS Y
     # when y = 0, z = 0, sum of lam = 0, x_load_D = 0

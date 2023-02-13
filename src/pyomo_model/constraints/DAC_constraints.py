@@ -14,11 +14,11 @@ Pengfei Cheng
 8. mass balance inequalities
 """
 
-from pyomo.environ import *
+from pyomo.environ import Constraint
 from ..params import *
 
 
-def add_DAC_constraints(m, set_hour_0, set_hour, n_hour):
+def add_DAC_constraints(m, set_hour_0, set_hour, n_hour, set_scenario):
 
     # 1. STATE EQUATION
     # x_sorbent_A1

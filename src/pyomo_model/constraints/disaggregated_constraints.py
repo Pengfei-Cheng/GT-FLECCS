@@ -19,11 +19,11 @@ Pengfei Cheng
         DAC base steam          allocable steam
 """
 
-from pyomo.environ import *
+from pyomo.environ import Constraint
 from ..params import *
 
 
-def add_disaggregated_constraints(m, set_hour_0):
+def add_disaggregated_constraints(m, set_hour_0, set_scenario):
 
     # 1. CONVEX COMBINATION OF lam = X_LOAD_FACTOR_D (AT DISPATCH MODE)
     #    load factor is a convex combination of extreme points

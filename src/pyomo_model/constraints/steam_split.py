@@ -13,11 +13,11 @@ UPDATE:
     01-21-2022: added steam rate limit constraint.
 """
 
-from pyomo.environ import *
+from pyomo.environ import Constraint
 from ..params import *
 
 
-def add_steam_split_constraints(m, set_hour_0):
+def add_steam_split_constraints(m, set_hour_0, set_scenario):
 
     # 1. STEAM ALLOCATION
     def eq_steam_allocation(m, i, s):

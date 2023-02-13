@@ -16,10 +16,10 @@ Pengfei Cheng
 5. costing variables
 """
 
-from pyomo.environ import *
+from pyomo.environ import Var, Binary
 from .params import *
 
-def declare_variables(m, set_hour_0):
+def declare_variables(m, set_hour_0, set_scenario):
 
     # 1. OVERALL VARIABLES
     #    indexed by hour

@@ -10,11 +10,11 @@ Pengfei Cheng
 4. PCC power usage
 """
 
-from pyomo.environ import *
+from pyomo.environ import Constraint
 from ..params import *
 
 
-def add_PCC_constraints(m, set_hour_0):
+def add_PCC_constraints(m, set_hour_0, set_scenario):
 
     # 1. PCC CO2 CAPTURE
     def eq_PCC_CO2_cap(m, i, s):

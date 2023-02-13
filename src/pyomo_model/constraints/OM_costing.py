@@ -6,11 +6,11 @@ Pengfei Cheng
 2023
 """
 
-from pyomo.environ import *
+from pyomo.environ import Constraint
 from ..params import *
 
 
-def add_OM_costing_constraints(m, set_hour_0):
+def add_OM_costing_constraints(m, set_hour_0, set_scenario):
 
     # # FOM of DAC
     # def eq_FOM_DAC(m):

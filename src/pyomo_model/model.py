@@ -22,7 +22,20 @@ logging.basicConfig(level=logging.INFO, format='%(message)s')
 # "MiNg_100_NYISO", "MiNg_100_PJM-W", "MiNg_100_CAISO", "MiNg_100_ERCOT",
 # "MiNg_150_MISO-W", "BaseCaseTax", "HighWindTax", "HighSolarTax",
 # "WinterNYTax"]
-def const_model(n_day=2, elec_price_signal="MiNg_150_NYISO", month_diff=2):
+def const_model(n_day=2, elec_price_signal="MiNg_150_NYISO", week_diff=1):
+
+    # check if the given arguments are reasonable
+    if n_day > week_diff * 7:
+        msg = "Provided day number is larger than the interval difference. "
+        msg += "This would cause overlaps of electricity signals in consecutive scenarios. "
+        msg += f"day number: {n_day}; interval difference: {week_diff * 7}."
+        raise ValueError(msg)
+    if week_diff < 1:
+        msg = "The minimum interval difference should be 1 week. "
+        msg += f"Provided argument: {week_diff} week."
+        raise ValueError(msg)
+
+    # --------------------------------------------------------------------------
 
     logger.info("*" * 80)
     logger.info("*" * 18 + "   GATECH NGCC-PCC-DAC OPTIMIZATION MODEL   " + "*" * 18)
@@ -75,12 +88,12 @@ def const_model(n_day=2, elec_price_signal="MiNg_150_NYISO", month_diff=2):
     # SCENARIO GENERATION
 
     # generate list of months for scenarios
-    months = range(12 // month_diff)
+    weeks = range(52 // week_diff)
     signals = []
 
-    for m in months:
-        base = m * month_diff * 30 * 24
-        # read the signal during that month
+    for w in weeks:
+        base = w * week_diff * 7 * 24
+        # read the signal during that week
         _signal = power_price[base:base + n_hour].values
         signals.append(_signal)
 
@@ -106,29 +119,29 @@ def const_model(n_day=2, elec_price_signal="MiNg_150_NYISO", month_diff=2):
     # construct model
     logger.info("Constructing model...")
 
-    m = ConcreteModel()
+    w = ConcreteModel()
 
-    declare_variables(m, set_hour_0, set_scenario)
-    add_compress_vent_constraints(m, set_hour_0, set_scenario)
-    add_DAC_constraints(m, set_hour_0, set_hour, n_hour, set_scenario)
-    add_DAC_costing_constraints(m, set_hour_0, set_scenario)
-    add_disaggregated_constraints(m, set_hour_0, set_scenario)
-    add_OM_costing_constraints(m, set_hour_0, set_scenario)
-    add_operation_mode_logic_constraints(m, limit_start_up, set_hour_0, set_hour, set_scenario)
-    add_overall_var_constraints(m, set_hour_0, set_scenario)
-    add_PCC_constraints(m, set_hour_0, set_scenario)
-    add_power_constraints(m, set_hour_0, set_scenario)
-    add_steam_split_constraints(m, set_hour_0, set_scenario)
+    declare_variables(w, set_hour_0, set_scenario)
+    add_compress_vent_constraints(w, set_hour_0, set_scenario)
+    add_DAC_constraints(w, set_hour_0, set_hour, n_hour, set_scenario)
+    add_DAC_costing_constraints(w, set_hour_0, set_scenario)
+    add_disaggregated_constraints(w, set_hour_0, set_scenario)
+    add_OM_costing_constraints(w, set_hour_0, set_scenario)
+    add_operation_mode_logic_constraints(w, limit_start_up, set_hour_0, set_hour, set_scenario)
+    add_overall_var_constraints(w, set_hour_0, set_scenario)
+    add_PCC_constraints(w, set_hour_0, set_scenario)
+    add_power_constraints(w, set_hour_0, set_scenario)
+    add_steam_split_constraints(w, set_hour_0, set_scenario)
 
-    add_objective_function(m, cost_NG, power_price, cost_start_up, set_hour, set_scenario, scenario_prob, scenario_param)
+    add_objective_function(w, cost_NG, power_price, cost_start_up, set_hour, set_scenario, scenario_prob, scenario_param)
 
     logger.info("Done.")
 
     # --------------------------------------------------------------------------
     # print model size
 
-    logger.info(f"# variable: \t{sum(1 for _ in m.component_data_objects(Var))}")
-    logger.info(f"# constraint: \t{sum(1 for _ in m.component_data_objects(Constraint))}")
+    logger.info(f"# variable: \t{sum(1 for _ in w.component_data_objects(Var))}")
+    logger.info(f"# constraint: \t{sum(1 for _ in w.component_data_objects(Constraint))}")
 
     # --------------------------------------------------------------------------
     # --------------------------------------------------------------------------
@@ -159,6 +172,6 @@ def const_model(n_day=2, elec_price_signal="MiNg_150_NYISO", month_diff=2):
     objs = {s: _obj for s in set_scenario}
 
     mm = StochasticModel()
-    mm.build_from_pyomo(m, fs_vars, fs_cons, set_scenario, objs, obj_sense=-1)
+    mm.build_from_pyomo(w, fs_vars, fs_cons, set_scenario, objs, obj_sense=-1)
 
     return mm

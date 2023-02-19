@@ -161,7 +161,7 @@ def const_model(n_day=2, elec_price_signal="MiNg_150_NYISO", week_diff=1):
                     - cost_NG * m.x_fuel[i, s] + \
                     scenario_param[s][0] * m.x_CO2_cap_total[i, s] - \
                     a_cost_CO2_TS * m.x_CO2_compress[i, s] + \
-                    scenario_param[s][1][i] * m.x_power_net[i, s] - \
+                    scenario_param[s][1][i - 1] * m.x_power_net[i, s] - \
                     cost_start_up[s] * m.z0[i, s] - \
                     m.x_cost_NGCC_VOM[i, s] - m.x_cost_PCC_VOM[i, s] - m.x_cost_DAC_VOM[i, s] - m.x_cost_PCC_compr_VOM[i, s] - m.x_cost_DAC_compr_VOM[i, s]
                     for i in set_hour

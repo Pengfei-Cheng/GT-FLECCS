@@ -50,7 +50,10 @@ To use a certain MILP solver, please install it separately.
 
 ## Usage
 
-To directly run the model, simply execute `model.py`.
+To directly run the model, simply execute `model.py` using:
+```shell
+python -m src.pyomo_model.model
+```
 
 To run the model in a Jupyter notebook for exploratory programming, run:
 ```Python

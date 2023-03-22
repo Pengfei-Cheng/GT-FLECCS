@@ -2,6 +2,8 @@
 
 This repo contains the optimization model for the NGCC-PCC-DAC retrofit design modeled in `Julia/Jump` and `Python/Pyomo`.
 
+For the extended supplementary information report, [click here](/supplementary_information_extended.pdf).
+
 ## Main features
 - co-optimizes the design and operational decisions
 - considers multiple future energy scenarios (varying electricity prices for a year + varying CO2 prices)
@@ -36,7 +38,8 @@ Currently there are 4 branches:
 │   └── resources                       # other resource files
 ├── .gitignore
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── supplementary_information_extended.txt  # extended supplementary information report
 ```
 
 ## Installation

@@ -2,7 +2,7 @@
 
 This repo contains the optimization model for the NGCC-PCC-DAC retrofit design modeled in `Julia/Jump` and `Python/Pyomo`.
 
-For the extended supplementary information report, [click here](/supplementary_information_extended.pdf).
+For the extended **supplementary information report**, [click here](/supplementary_information_extended.pdf).
 
 ## Main features
 - co-optimizes the design and operational decisions
@@ -24,18 +24,18 @@ Currently there are 4 branches:
 
 ```
 .
-├── FLECCS_env                          # Julia environment configuration
-├── src                                 # source files
-│   ├── models                          # optimization model files
+├── FLECCS_env                              # Julia environment configuration
+├── src                                     # source files
+│   ├── models                              # optimization model files
 │       ├── constraints
 │       ├── output
 │       ├── params
-│       ├── model.jl                    # main file
+│       ├── model.jl                        # main file
 │       ├── obj.jl
 │       └── variables.jl
-│   ├── post_processing                 # post-processing scripts
-│   ├── regression                      # regression scripts for data from simulation
-│   └── resources                       # other resource files
+│   ├── post_processing                     # post-processing scripts
+│   ├── regression                          # regression scripts for data from simulation
+│   └── resources                           # other resource files
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
